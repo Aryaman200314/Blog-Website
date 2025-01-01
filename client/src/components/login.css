@@ -1,0 +1,11 @@
+#Make-an-accout-btn {
+    margin-top: 0px;
+}
+#Make-an-accout-btn:hover {
+    background-color: rgb(21, 101, 192);
+    color: white;
+}
+#Login-btn {
+    margin-top: 20px;
+    box-shadow: 1px 1px 1px 1px lightgrey;
+}
