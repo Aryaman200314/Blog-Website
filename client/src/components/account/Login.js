@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, TextField, Button, styled } from "@mui/material";
 import './login.css'
 import { api } from '../../server/api';
+import { DataContext } from "../../context/DataProvider";
+import { useNavigate } from "react-router-dom";
+
 const Component = styled(Box)`
   width: 400px;
   margin: auto;
@@ -30,12 +33,19 @@ const signupInitialValues = {
   username: '',
   password: ''
 }
-function Login() {
+const loginIntialValues = {
+  username: '',
+  password: ''
+}
+function Login({ setIsUserAuthenticated }) {
   const imageURL =
     "https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png";
     const [account, toggleAccount] = useState('login');
     const [signup, setSignup] = useState(signupInitialValues);
+    const [login, setLogin] = useState(loginIntialValues)
     const [ error, setError] = useState('');
+    const { setAccount } = useContext(DataContext);
+    const navigate = useNavigate();
 
     const toggleSignUp = () => {
       account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
@@ -57,6 +67,32 @@ function Login() {
       }
     }
 
+    const onValueChange = (e) => {
+      console.log(e.target.value);
+      
+      setLogin({...login, [e.target.name]: e.target.value});
+      // console.log(e.target.value);
+    }
+
+    const loginUser = async () => {
+      let reponse = await api.userLogin(login);
+      if(reponse.isSuccess) {
+        setError('');
+        sessionStorage.setItem('accessToken', `Bearer ${reponse.data.accessToken}`);
+        sessionStorage.setItem('refreshToken', `Bearer ${reponse.data.refreshToken}`);
+        setAccount({name: reponse.data.name, username: reponse.data.username});
+        
+        setIsUserAuthenticated(true);
+        console.log("before")
+        navigate('/');
+        console.log("after")
+      }
+      else {
+        setError("Something went wrong please try again later");
+      }
+
+    }
+
   return (
     <Component>
       <Box id="Main-box">
@@ -64,9 +100,9 @@ function Login() {
        { 
         account === 'login' ? 
             <Wrapper>
-              <TextField variant="outlined"  label="Username" />
-              <TextField variant="outlined" label="Password" />
-              <Button id="Login-btn" variant="contained">Login</Button>
+              <TextField variant="outlined" value={login.username} onChange={(e) => onValueChange(e)} name= "username" label="Username" />
+              <TextField variant="outlined" value={login.password} onChange={(e) => onValueChange(e)} name="password" label="Password" />
+              <Button id="Login-btn" variant="contained" onClick={()=> loginUser()} >Login</Button>
               {error && <p id="error">{error}</p>}
               <p>OR</p>
               <Button id="Make-an-accout-btn" onClick={() =>toggleSignUp()}>Create an Account </Button>
