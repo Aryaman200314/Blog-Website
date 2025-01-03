@@ -7,5 +7,17 @@
 }
 #Login-btn {
     margin-top: 20px;
+    text-transform: none;
     box-shadow: 1px 1px 1px 1px lightgrey;
+}
+#SignUp-btn{
+    margin-top: 20px;
+    text-transform: none;
+    box-shadow: 1px 1px 1px 1px lightgrey;
+}
+#Main-box {
+    margin-top: 90px;
+}
+#error{
+    color: red;
 }

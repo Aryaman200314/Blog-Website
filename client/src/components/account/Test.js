@@ -1,15 +1,24 @@
 import React, { useState } from 'react'
 import {Box, TextField, Button, styled  } from '@mui/material'
 import './login.css'
+import { api } from '../../server/api';
 function Login() {
   const [page, setPage] = useState('login');
-  
+  const [error, setError] = useState('');
   const toggleSignUp = () => {
     page === 'signup' ? setPage('login') : setPage('signup');
   }
 
-  const signUpUser = () => {
-    
+  const signUpUser = async() => {
+    let reponse = await api.userSignup(credentialsSignUp);
+    if(reponse.isSuccess) {
+      setError('');
+      setcredentialsSignUp(userCredentialsSignUp);
+      setPage('login');
+    }
+    else {
+      setError("Something went wrong please try again later");
+    }
   }
   
   const userCredentialsSignUp = {
@@ -18,10 +27,10 @@ function Login() {
     password: ''
   }
   
-  const [credentailsSignUp, setCredentailsSignUp] = useState(userCredentialsSignUp)
+  const [credentialsSignUp , setcredentialsSignUp ] = useState(userCredentialsSignUp)
   
   const onInputChange = (e) => {
-    setCredentailsSignUp({...credentailsSignUp, [e.target.name] : e.target.value})
+    setcredentialsSignUp ({...credentialsSignUp , [e.target.name] : e.target.value})
     console.log("typed and stored");
     
   }
@@ -73,8 +82,9 @@ function Login() {
         : 
         <Wrapper>
         <TextField variant="outlined" onChange={(e) => onInputChange(e)} name='name' label="Name" />
-        <TextField variant="outlined" onChange={(e) => onInputChange(e)} name='username' label="Username" />
-        <TextField variant="outlined" onChange={(e) => onInputChange(e)} name='password' label="Password"/>
+        <TextField variant="outlined" onChange={(e) => onInputChange(e)} name='username'  label="Username" />
+        <TextField variant="outlined" onChange={(e) => onInputChange(e)} name='password'  label="Password"/>
+          {error && <div style={{color: 'red'}}>{error}</div>}
         <Button id="Login-btn" variant="contained" onClick={() => signUpUser()} > Sign Up </Button>
         <p>Aready have an account</p>
         <Button id='Make-an-accout-btn' variant="text" onClick={()=>toggleSignUp()} >Login</Button>
