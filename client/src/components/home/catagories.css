@@ -1,0 +1,18 @@
+#createBlog-btn{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    text-transform: none;
+    background-color: #1976d2;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    font-weight: bold;
+    /* box-shadow: 1px 1px 1px 1px lightgrey; */
+    /* border-right: 1px solid black;
+    border-bottom: 1px Solid black; */
+}
+#catagories-table{
+    border-right: thin solid black;
+    border-top: 1px solid black;
+}

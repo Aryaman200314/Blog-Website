@@ -6,7 +6,9 @@ const Component = styled(Toolbar) `
     justify-content: center;
     & > a {
     padding: 20px;
-    color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
     text-decoration: none;
     }
 `

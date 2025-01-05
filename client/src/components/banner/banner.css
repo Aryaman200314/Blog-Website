@@ -1,0 +1,15 @@
+#heading-h3{
+    color: black;
+   margin-top: -10px;
+   background-color: white;
+   padding: 2px 5px 2px 5px;
+   border-radius: 5px; 
+}
+#heading-h1{
+    color: white;
+    text-shadow: 2px 2px 2px 2px black;
+    background-color: black;
+    padding: 2px 5px 2px 5px;
+    border-radius: 5px;
+    font-size: 50px;
+}
