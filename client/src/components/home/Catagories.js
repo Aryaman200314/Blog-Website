@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Button,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -10,20 +11,30 @@ import {
 } from "@mui/material";
 import { catagories } from "../../constants/data";
 import './catagories.css'
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+
+const styledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`
 
 function Catagories() {
+  const [setSearchParams] = useSearchParams();
+  const catagory = setSearchParams.get('category');
   return (
     <>
-    <Link to='/create' style={{ textDecoration: 'none' }}>
+    <styledLink to={`/create?catagory=${catagory || ''}`} >
     <Button id="createBlog-btn">Create Blog</Button>
-    </Link>
+    </styledLink>
       
       <Table id="catagories-table">
         <TableHead>
           <TableRow>
             <TableCell>
-                All Catagories
+              <styledLink to='/'>
+              All Catagories
+              </styledLink>
+                
             </TableCell>
           </TableRow>
         </TableHead>
@@ -32,7 +43,9 @@ function Catagories() {
             return (
             <TableRow key={catagory.id}>
               <TableCell>
+                <styledLink to={`/?catagory=${catagory.type}`}> 
                 {catagory.type}
+                 </styledLink>
               </TableCell>
             </TableRow>)
           })}
